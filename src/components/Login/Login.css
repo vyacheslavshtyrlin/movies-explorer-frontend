@@ -22,7 +22,7 @@
 
 .login__link {
   transition: all 0.3s ease;
-  color: #000000;
+  color: #2be080;
   text-decoration: none;
   line-height: 0;
   max-width: 38px;
@@ -45,7 +45,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 30px;
+  gap: 24px;
 }
 
 .login__label {
@@ -65,16 +65,20 @@
 }
 
 .login__input {
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
   border-style: none;
   font-weight: 400;
   font-size: 14px;
-  background: #f9f9f9;
-  border-radius: 8px;
+  background: transparent;
   line-height: 1.21;
   color: black;
   outline: none;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.login__input:focus {
+  border-bottom: 1px solid #2BE080;
 }
 
 .login__input_error {
@@ -98,7 +102,7 @@
 .login__button {
   margin-top: auto;
   border-style: none;
-  background: #000000;
+  background: #2BE080;
   border-radius: 3px;
   color: #fff;
   font-size: 14px;

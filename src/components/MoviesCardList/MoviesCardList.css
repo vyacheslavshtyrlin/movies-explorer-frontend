@@ -5,7 +5,7 @@
   align-items: center;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 70px 70px 80px;
+  padding: 0 70px 80px
 }
 
 .movies-card-list__list {
@@ -20,7 +20,7 @@
 }
 
 .movies-card-list__show-more {
-  width: 100%;
+  width: 320px;
   background-color: white;
   border-radius: 6px;
   border-style: none;
@@ -37,7 +37,7 @@
 
 @media screen and (max-width: 1024px) {
   .movies-card-list {
-    padding: 70px 30px 80px;
+    padding: 0 30px 80px;
   }
 
   .movies-card-list__list {
@@ -60,6 +60,10 @@
   }
 
   .movies-card-list {
-    padding: 40px 10px 80px;
+    padding: 0 10px 80px;
+  }
+
+  .movies-card-list__show-more {
+    width: 240px;
   }
 }

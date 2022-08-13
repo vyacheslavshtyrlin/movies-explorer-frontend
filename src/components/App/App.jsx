@@ -44,7 +44,7 @@ export default function App() {
     <div className="app">
       <Switch>
         <Route path="/" exact>
-          <Header authorized={false} onClickMenu={onClickMenu} menuOpen={menuOpen}  />
+          <Header authorized={true} onClickMenu={onClickMenu} menuOpen={menuOpen}  />
           <Main />
           <Footer />
         </Route>

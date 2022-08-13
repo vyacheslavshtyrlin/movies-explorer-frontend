@@ -1,6 +1,6 @@
-import './MoviesCard.css';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import "./MoviesCard.css";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function MoviesCard({ card }) {
   const location = useLocation();
@@ -21,11 +21,11 @@ export default function MoviesCard({ card }) {
         />
         <div className="movies-card__description">
           <h2 className="movies-card__title">{card.title}</h2>
-          {location.pathname === '/movies' && (
+          {location.pathname === "/movies" && (
             <button
               type="button"
               className={`movies-card__button movies-card__button_type_${
-                !isCardSaved ? 'save' : 'saved'
+                !isCardSaved ? "save" : "saved"
               }`}
               onClick={handleOnClick}
             ></button>
@@ -36,9 +36,9 @@ export default function MoviesCard({ card }) {
               className="movies-card__button movies-card__button_type_unsave"
             ></button>
           )}
+          <span className="movies-card__duration">{card.duration}</span>
         </div>
-        <span className="movies-card__duration">{card.duration}</span>
       </article>
     </li>
-  )
+  );
 }

@@ -5,6 +5,7 @@ import Burger from '../Burger/Burger.jsx';
 export default function Navigation({ authorized, onClickMenu, menuOpen }) {
 
   const activeLink = `navigation__link_active_${menuOpen ? 'mobile' : 'desktop'}`
+  const itemDesktop = `navigation__item ${menuOpen ? '' : 'navigation__item_type_account'} `
 
   return (
     <>
@@ -44,12 +45,13 @@ export default function Navigation({ authorized, onClickMenu, menuOpen }) {
                 Сохранённые фильмы
               </NavLink>
             </li>
-            <li className="navigation__item">
+            <li className={itemDesktop}>
               <NavLink to="/profile" className="navigation__link navigation__link_type_account" activeClassName={activeLink}>
                 Аккаунт
               </NavLink>
             </li>
           </ul>
+
         </nav>
       )}
     </>

@@ -5,7 +5,6 @@
   position: relative;
   width: 174px;
   height: 20px;
-  margin-top: 27px;
   transition: all .3s ease;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -36,7 +35,7 @@
 }
 
 .tumbler__text {
-  margin: 0;
+  margin-left: 15px;
   position: absolute;
   font-weight: 400;
   font-size: 14px;
@@ -64,9 +63,8 @@
   background-color: #3ddc84;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 544px) {
   .tumbler {
-    margin-top: 42px;
     width: 148px;
   }
 

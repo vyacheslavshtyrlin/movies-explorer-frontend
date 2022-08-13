@@ -3,17 +3,24 @@
   align-items: center;
   position: relative;
   color: black;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .navigation__list {
+  width: 100%;
   padding: 0;
   margin: 0;
   list-style-type: none;
   display: flex;
   align-items: center;
   gap: 30px;
-  transition: all .6s ease;
+  transition: all 0.6s ease;
   z-index: 3;
+}
+
+.navigation__item_type_account {
+  margin-left: auto;
 }
 
 .navigation__list_logged {
@@ -26,20 +33,12 @@
   line-height: 1.29;
   text-decoration: none;
   color: #000000;
-  display: flex;
-  align-items: center;
-  transition: all .3s ease;
-}
-
-.navigation__link:hover {
-  opacity: .7;
+  transition: all 0.3s ease;
 }
 
 .navigation__link_active_desktop {
   font-weight: 500;
 }
-
-
 
 .navigation__link.navigation__link_landing {
   font-size: 12px;
@@ -48,35 +47,23 @@
 }
 
 .navigation__link_signin {
-  color: white;
+  color: black;
   padding: 8px 20px;
-  background-color: black;
+  background: #2be080;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
 }
 
 .navigation__link_type_account {
-  position: relative;
   font-weight: 500;
   font-size: 14px;
   line-height: 1.14;
-  margin-left: 24px;
-  padding-left: 15px;
-  padding-right: 34px;
   min-height: 30px;
-}
-
-.navigation__link_type_account::after {
-  position: absolute;
-  content: '';
-  top: 0;
-  right: 0;
-  width: 30px;
-  height: 100%;
-  border-radius: 50px;
-  background-color: transparent;
-  background-image: url('../../images/profile.svg');
-  background-repeat: no-repeat;
-  background-position: center;
+  background: #f9f9f9;
+  border-radius: 20px;
+  width: 100px;
+  padding: 8px 20px;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 800px) {
@@ -89,13 +76,14 @@
   .navigation__list_logged {
     gap: 28px;
     position: absolute;
-    top:0;
+    top: 0;
     flex-direction: column;
     height: 100vh;
     width: 67%;
   }
 
-  .navigation__item {
+  .navigation__link_active_mobile {
+    border-bottom: 2px solid black;
   }
 
   .navigation__link_type_account {
@@ -103,7 +91,7 @@
   }
 
   .navigation__item:last-child {
-    margin: auto 0 90px 0
+    margin: auto 0 90px 0;
   }
 
   .navigation__item:first-child {
@@ -127,9 +115,9 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, .3);
+    background-color: rgba(0, 0, 0, 0.3);
     justify-content: flex-end;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
     z-index: 3;
   }
 

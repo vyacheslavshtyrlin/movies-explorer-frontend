@@ -8,9 +8,9 @@
 }
 
 .about-project__container {
+  padding: 110px 70px;
   max-width: 1280px;
   width: 100%;
-  padding: 110px 70px;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
@@ -88,7 +88,8 @@
   font-size: 14px;
   line-height: 1.21;
   color: #ffffff;
-  background-color: #000000;
+  background: #2BE080;
+  color: black;
 }
 
 .about-project__frontend-duration {
