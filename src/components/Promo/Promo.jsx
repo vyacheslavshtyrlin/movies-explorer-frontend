@@ -9,26 +9,14 @@ export default function Promo() {
             Учебный проект студента факультета Веб-разработки.
           </h1>
           <div className="promo__button-container">
-            <a
-              href="https://goo.su/P65u"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="promo__learn-more-link"
-            >
+            <a href="#about" className="promo__learn-more-link">
               О проекте
             </a>
-            <a
-              href="https://goo.su/P65u"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="promo__learn-more-link"
-            >
+            <a href="#tech" className="promo__learn-more-link">
               Технологии
             </a>
             <a
-              href="https://goo.su/P65u"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#student"
               className="promo__learn-more-link"
             >
               Студент

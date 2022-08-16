@@ -75,7 +75,7 @@
 
   .navigation__list_logged {
     gap: 28px;
-    position: absolute;
+    position: fixed;
     top: 0;
     flex-direction: column;
     height: 100vh;

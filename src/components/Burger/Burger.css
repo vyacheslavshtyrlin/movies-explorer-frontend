@@ -1,7 +1,7 @@
 .burger-button {
   display: none;
   align-items: center;
-  position: absolute;
+  position: fixed;
   top: 27px;
   right: 38px;
   width: 28px;
@@ -17,7 +17,7 @@
 }
 
 .burger-button:hover {
-  opacity: 0.8; 
+  opacity: 0.8;
 }
 
 .burger-button:focus-visible {
