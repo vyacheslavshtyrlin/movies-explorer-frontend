@@ -35,6 +35,10 @@
   border: 1px solid #e8e8e8;
 }
 
+.movies-card-list__show-more_disabled {
+  display: none;
+}
+
 @media screen and (max-width: 1024px) {
   .movies-card-list {
     padding: 0 30px 80px;
