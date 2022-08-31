@@ -17,9 +17,11 @@ export default class Auth {
   createUser(data) {
     const promise = fetch(`${this._url}/signup`, {
       method: "POST",
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json; charset=utf-8",
+        'Content-Type': 'application/json; charset=utf-8'
       },
+
       body: JSON.stringify({
         name: data.name,
         email: data.email,
@@ -32,9 +34,11 @@ export default class Auth {
   login(data) {
     const promise = fetch(`${this._url}/signin`, {
       method: "POST",
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json; charset=utf-8",
+        'Content-Type': 'application/json; charset=utf-8'
       },
+
       body: JSON.stringify({ password: data.password, email: data.email }),
     });
     return this._checkStatus(promise);
