@@ -44,7 +44,7 @@ export default function App() {
           setSavedMovies(moviesData);
         })
         .catch((error) => {
-          isOpen();
+          isOpen(true);
           setMessage(`${error}`);
         });
     }
@@ -71,7 +71,7 @@ export default function App() {
         history.push("/signin");
       })
       .catch((error) => {
-        isOpen();
+        isOpen(true);
         setMessage(`${error}`);
       })
       .finally(() => setTimeout(() => setPreloader(false), 500));
@@ -86,12 +86,12 @@ export default function App() {
           localStorage.setItem("jwt", res.token);
           handleCheckToken();
         } else {
-          isOpen();
+          isOpen(true);
           setMessage("Произошла ошибка, попробуйте еще раз");
         }
       })
       .catch((error) => {
-        isOpen();
+        isOpen(true);
         setMessage(`${error}`);
       })
       .finally(() => setTimeout(() => setPreloader(false), 500));
@@ -123,7 +123,7 @@ export default function App() {
       const updateState = savedMovies
         .filter((item) => item._id !== movie.data._id)
         .catch((error) => {
-          isOpen();
+          isOpen(true);
           setMessage(`${error}`);
         });
 
@@ -144,7 +144,7 @@ export default function App() {
         });
       })
       .catch((error) => {
-        isOpen();
+        isOpen(true);
         setMessage(`${error}`);
       })
       .finally(() => setTimeout(() => setPreloader(false), 500));
