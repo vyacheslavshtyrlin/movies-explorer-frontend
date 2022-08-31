@@ -17,7 +17,6 @@ export default class Auth {
   createUser(data) {
     const promise = fetch(`${this._url}/signup`, {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },
@@ -33,7 +32,6 @@ export default class Auth {
   login(data) {
     const promise = fetch(`${this._url}/signin`, {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },
