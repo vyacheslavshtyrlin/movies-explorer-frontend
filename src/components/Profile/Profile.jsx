@@ -5,21 +5,24 @@ import useFormWithValidation from "../../hooks/useFormWithValidation";
 
 export default function Profile({ onEdit, onExit }) {
   const { user } = useContext(currentUserContext);
+  console.log(user);
   const { values, handleChangeState, resetForm, errors, isValid } =
     useFormWithValidation();
 
-  const [state, setState] = useState({
-    name: user.name,
-    email: user.email,
-  });
   useEffect(() => {
-    resetForm();
-  }, [resetForm]);
+    if (user) {
+      resetForm(user, {}, true);
+    }
+  }, [user, resetForm]);
 
   function handleSubmit(e) {
     e.preventDefault();
     onEdit(values);
   }
+
+  const isActive =
+    !isValid || (user.name === values.name && user.email === values.email);
+  console.log(isActive);
 
   return (
     <main className="profile">
@@ -41,7 +44,7 @@ export default function Profile({ onEdit, onExit }) {
               minLength="2"
               maxLength="30"
               onChange={handleChangeState}
-              value={values.name}
+              value={values.name || ""}
             />
             <span className="profile__error-name">{errors.name || ""}</span>
           </label>
@@ -51,7 +54,7 @@ export default function Profile({ onEdit, onExit }) {
               name="email"
               className="profile__input"
               type="email"
-              value={values.email}
+              value={values.email || ""}
               onChange={handleChangeState}
               required
             />
@@ -59,7 +62,13 @@ export default function Profile({ onEdit, onExit }) {
           </label>
         </div>
         <div className="profile__button-container">
-          <button disabled={!isValid} type="submit"  className={`profile__button-edit ${!isValid && "profile__button-edit_disabled"}`} >
+          <button
+            disabled={isActive ? true : false}
+            type="submit"
+            className={`profile__button-edit ${
+              !isValid && "profile__button-edit_disabled"
+            }`}
+          >
             Редактировать
           </button>
           <button

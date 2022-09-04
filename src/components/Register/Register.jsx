@@ -8,20 +8,6 @@ export default function Register({ onRegister }) {
   const { values, handleChangeState, resetForm, errors, isValid } =
     useFormWithValidation();
 
-  const [state, setState] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setState((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   useEffect(() => {
     resetForm();
   }, [resetForm]);
@@ -54,7 +40,7 @@ export default function Register({ onRegister }) {
               required
               minLength="2"
               maxLength="30"
-              value={values.name || ''}
+              value={values.name || ""}
             />
             <span className="register__error">{errors.name || ""}</span>
           </label>
@@ -65,7 +51,7 @@ export default function Register({ onRegister }) {
               name="email"
               className="register__input"
               type="email"
-              value={values.email  || ''}
+              value={values.email || ""}
               required
             />
             <span className="register__error">{errors.email || ""}</span>
@@ -77,7 +63,7 @@ export default function Register({ onRegister }) {
               name="password"
               className="register__input"
               type="password"
-              value={values.password || ''}
+              value={values.password || ""}
               required
             />
             <span className="register__error">{errors.password || ""}</span>

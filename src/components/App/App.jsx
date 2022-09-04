@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { currentUserContext } from "../../context/CurrentUserContext";
 import React, { useState, useEffect } from "react";
 import Movies from "../Movies/Movies.jsx";
@@ -27,7 +27,10 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [preloader, setPreloader] = useState(false);
   const [open, isOpen] = useState(false);
-  const [message, setMessage] = useState("Произошла ошибка");
+  const [message, setMessage] = useState({
+    isError: true,
+    message: "Произошла ошибка",
+  });
   const mainApi = new MainApi(
     MAIN_URL,
     `Bearer ${localStorage.getItem("jwt")}`
@@ -45,7 +48,10 @@ export default function App() {
         })
         .catch((error) => {
           isOpen(true);
-          setMessage(`${error}`);
+          setMessage({
+            isError: true,
+            message: `${error}`,
+          });
         });
     }
   }, [authorized]);
@@ -68,11 +74,14 @@ export default function App() {
       .createUser(data)
       .then(() => {
         setPreloader(true);
-        history.push("/signin");
+        handleLogin(data);
       })
       .catch((error) => {
         isOpen(true);
-        setMessage(`${error}`);
+        setMessage({
+          isError: true,
+          message: `${error}`,
+        });
       })
       .finally(() => setTimeout(() => setPreloader(false), 500));
   };
@@ -86,13 +95,18 @@ export default function App() {
           localStorage.setItem("jwt", res.token);
           handleCheckToken();
         } else {
-          isOpen(true);
-          setMessage("Произошла ошибка, попробуйте еще раз");
+          setMessage({
+            isError: true,
+            message: "Произошла ошибка",
+          });
         }
       })
       .catch((error) => {
         isOpen(true);
-        setMessage(`${error}`);
+        setMessage({
+          isError: true,
+          message: `${error}`,
+        });
       })
       .finally(() => setTimeout(() => setPreloader(false), 500));
   };
@@ -110,44 +124,65 @@ export default function App() {
   };
 
   const handleSaveMovie = (data) => {
-    mainApi.createMovie(data).then((res) => {
-      setSavedMovies([res, ...savedMovies]);
-    });
+    mainApi
+      .createMovie(data)
+      .then((res) => {
+        setSavedMovies([res, ...savedMovies]);
+      })
+      .catch((error) => {
+        isOpen(true);
+        setMessage({
+          isError: true,
+          message: `${error}`,
+        });
+      });
   };
 
   const handleDeleteMovie = (data) => {
     const findMovie = savedMovies.find(
       (item) => item._id === data._id || item.movieId === data.movieId
     );
-    mainApi.deleteMovie(findMovie).then((movie) => {
-      const updateState = savedMovies
-        .filter((item) => item._id !== movie.data._id)
-        .catch((error) => {
-          isOpen(true);
-          setMessage(`${error}`);
+    mainApi
+      .deleteMovie(findMovie)
+      .then((movie) => {
+        const updateState = savedMovies.filter(
+          (item) => item._id !== movie.data._id
+        );
+        setSavedMovies(updateState);
+      })
+      .catch((error) => {
+        isOpen(true);
+        setMessage({
+          isError: true,
+          message: `${error}`,
         });
-
-      setSavedMovies(updateState);
-    });
+      });
   };
 
   const handleEditProfile = (data) => {
     mainApi
       .patchUser(data)
       .then((data) => {
-        setPreloader(true);
         setCurrentUser({
           user: {
             email: data.email,
             name: data.name,
           },
         });
+        isOpen(true);
+        setMessage({
+          isError: false,
+          message: `Профиль обновлен`,
+        });
       })
       .catch((error) => {
         isOpen(true);
-        setMessage(`${error}`);
+        setMessage({
+          isError: true,
+          message: `${error}`,
+        });
       })
-      .finally(() => setTimeout(() => setPreloader(false), 500));
+      .finally(() => setTimeout(() => isOpen(false), 1000));
   };
 
   const handleLogout = () => {
@@ -173,15 +208,23 @@ export default function App() {
             <Main />
           </Route>
           <Route exact path="/signup">
-            <Register onRegister={handleRegistration} />
+            {!authorized ? (
+              <Register onRegister={handleRegistration} />
+            ) : (
+              <Redirect to="/" />
+            )}
           </Route>
           <Route exact path="/signin">
-            <Login onLogin={handleLogin} />
+            {!authorized ? (
+              <Login onLogin={handleLogin} />
+            ) : (
+              <Redirect to="/" />
+            )}
           </Route>
-          <ProtectedRoute exact path="/movies" authorized={authorized}>
+          <ProtectedRoute path="/movies" authorized={authorized}>
             <Movies
               isOpen={isOpen}
-              onMessage={setMessage}
+              setMessage={setMessage}
               onDelete={handleDeleteMovie}
               onSave={handleSaveMovie}
               savedMovies={savedMovies}
@@ -189,16 +232,16 @@ export default function App() {
               setPreloader={setPreloader}
             />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/saved-movies" authorized={authorized}>
+          <ProtectedRoute path="/saved-movies" authorized={authorized}>
             <SavedMovies movies={savedMovies} onDelete={handleDeleteMovie} />
           </ProtectedRoute>
-          <ProtectedRoute authorized={authorized} exact patch="/profile">
+          <ProtectedRoute authorized={authorized} patch="/profile">
             <Profile onExit={handleLogout} onEdit={handleEditProfile} />
           </ProtectedRoute>
-          <Route path="*">
-            <NotFound goBack={goBack} />
-          </Route>
         </Switch>
+        <Route path="*">
+          <NotFound goBack={goBack} />
+        </Route>
         <Route exact path={headerPatchs}>
           <Footer />
         </Route>

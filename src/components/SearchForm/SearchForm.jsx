@@ -4,7 +4,8 @@ import { useMediaQuery } from "react-responsive";
 import loupe from "../../images/icon-form.svg";
 import { useState } from "react";
 
-export default function SearchForm({ value, onSearch, setTumbler }) {
+export default function SearchForm({ value, onSearch, setTumbler, checkbox, handleCheckBox}) {
+  console.log(checkbox)
   const [state, setState] = useState("");
   const isMobile = useMediaQuery({ query: `(min-width: 544px)` });
   const isTumbler = useMediaQuery({ query: `(max-width: 544px)` });
@@ -31,11 +32,11 @@ export default function SearchForm({ value, onSearch, setTumbler }) {
         />
         <div className="search__tumbler-container">
           <button className="search__button" type="submit"></button>
-          {isMobile && <Tumbler setTumbler={setTumbler}></Tumbler>}
+          {isMobile && <Tumbler handleCheckBox={handleCheckBox} tumbler={checkbox} setTumbler={setTumbler}></Tumbler>}
         </div>
-        {isMobile && <img className="search__icon" src={loupe} />}
+        {isMobile && <img alt="icon" className="search__icon" src={loupe} />}
       </form>
-      {isTumbler && <Tumbler setTumbler={setTumbler}></Tumbler>}
+      {isTumbler && <Tumbler handleCheckBox={handleCheckBox} tumbler={checkbox} setTumbler={setTumbler}></Tumbler>}
       <div className="search__line"></div>
     </section>
   );

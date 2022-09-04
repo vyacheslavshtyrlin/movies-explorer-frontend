@@ -1,7 +1,7 @@
 import "./Login.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import useFormWithValidation from "../../hooks/useFormWithValidation";
 
 export default function Login({ onLogin }) {

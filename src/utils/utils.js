@@ -50,4 +50,4 @@ function isSaved(arr, movie) {
   });
 }
 
-export {handleMoviesObject, filterMovies, getTimeFromMins, isSaved}
+export {handleMoviesObject, filterMovies, getTimeFromMins, isSaved, shortMovies}

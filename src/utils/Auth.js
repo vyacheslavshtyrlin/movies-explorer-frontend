@@ -1,4 +1,3 @@
-const API_URL = "https://api.moviesdiploma.nomoredomains.xyz";
 
 export default class Auth {
   constructor(url) {
