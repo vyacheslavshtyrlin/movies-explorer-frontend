@@ -238,10 +238,10 @@ export default function App() {
           <ProtectedRoute authorized={authorized} patch="/profile">
             <Profile onExit={handleLogout} onEdit={handleEditProfile} />
           </ProtectedRoute>
+          <Route path="*">
+            <NotFound goBack={goBack} />
+          </Route>
         </Switch>
-        <Route path="*">
-          <NotFound goBack={goBack} />
-        </Route>
         <Route exact path={headerPatchs}>
           <Footer />
         </Route>
