@@ -1,10 +1,20 @@
 import "./Register.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { useState, useEffect } from "react";
+import useFormWithValidation from "../../hooks/useFormWithValidation";
 
-export default function Register() {
+export default function Register({ onRegister }) {
+  const { values, handleChangeState, resetForm, errors, isValid } =
+    useFormWithValidation();
+
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
+
   function handleSubmit(e) {
     e.preventDefault();
+    onRegister(values);
   }
 
   return (
@@ -23,39 +33,46 @@ export default function Register() {
           <label className="register__label">
             <span className="register__label-text">Имя</span>
             <input
+              onChange={handleChangeState}
               name="name"
-              className='register__input'
+              className="register__input"
               type="text"
               required
               minLength="2"
               maxLength="30"
+              value={values.name || ""}
             />
-            <span className="register__error"></span>
+            <span className="register__error">{errors.name || ""}</span>
           </label>
           <label className="register__label">
             <span className="register__label-text">E-mail</span>
             <input
+              onChange={handleChangeState}
               name="email"
-              className='register__input'
+              className="register__input"
               type="email"
+              value={values.email || ""}
               required
             />
-            <span className="register__error"></span>
+            <span className="register__error">{errors.email || ""}</span>
           </label>
           <label className="register__label">
             <span className="register__label-text">Пароль</span>
             <input
+              onChange={handleChangeState}
               name="password"
-              className='register__input'
+              className="register__input"
               type="password"
+              value={values.password || ""}
               required
             />
-            <span className="register__error"></span>
+            <span className="register__error">{errors.password || ""}</span>
           </label>
         </div>
         <button
           type="submit"
-          className='register__button'
+          className={`login__button ${!isValid && "login__button_disabled"}`}
+          disabled={!isValid}
         >
           Зарегистрироваться
         </button>

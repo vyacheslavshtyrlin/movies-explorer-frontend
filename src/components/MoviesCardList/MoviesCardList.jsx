@@ -1,43 +1,78 @@
-import './MoviesCardList.css';
-import { useState, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
-import MoviesCard from '../MoviesCard/MoviesCard.jsx';
+import "./MoviesCardList.css";
+import { useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router-dom";
+import MoviesCard from "../MoviesCard/MoviesCard.jsx";
+import { isSaved } from "../../utils/utils";
 
-export default function MoviesCardList({ movies }) {
-  const location = useLocation();
-
+export default function MoviesCardList({
+  movies,
+  savedMovies,
+  onSave,
+  onDelete,
+}) {
   const [screenWidth, setScreenWidth] = useState(
     document.documentElement.clientWidth
   );
 
+  const [cardLength, setCardLength] = useState(0);
+  const [cardNumber, setCardNumber] = useState(0);
   const handleResizeWidth = useCallback(() => {
     setScreenWidth(document.documentElement.clientWidth);
   }, [setScreenWidth]);
 
+  const location = useLocation();
+
   useEffect(() => {
-    window.addEventListener('resize', handleResizeWidth);
+    window.addEventListener("resize", handleResizeWidth);
   }, [handleResizeWidth]);
+
+  useEffect(() => {
+    if (screenWidth > 1024) {
+      setCardLength(12);
+      setCardNumber(3);
+    } else if (screenWidth >= 544 && screenWidth < 1024) {
+      setCardLength(8);
+      setCardNumber(2);
+    } else if (screenWidth < 544) {
+      setCardLength(5);
+      setCardNumber(2);
+    }
+  }, [screenWidth, movies]);
+
+  const handleShowMore = () => {
+    setCardLength(cardLength + cardNumber);
+  };
 
   return (
     <section className="movies-card-list">
-      <ul className="movies-card-list__list">
-        {screenWidth > 917 &&
-          movies
-            .slice(0, 12)
-            .map((card) => <MoviesCard key={card._id} card={card} />)}
-        {screenWidth >= 584 &&
-          screenWidth < 918 &&
-          movies
-            .slice(0, 8)
-            .map((card) => <MoviesCard key={card._id} card={card} />)}
-        {screenWidth < 584 &&
-          movies
-            .slice(0, 5)
-            .map((card) => <MoviesCard key={card._id} card={card} />)}
-      </ul>
+      {movies.length === 0 ? (
+        <p>Ничего не найдено</p>
+      ) : (
+        <ul className="movies-card-list__list">
+          {movies.slice(0, cardLength).map((card) => (
+            <MoviesCard
+              onDelete={onDelete}
+              onSave={onSave}
+              key={card.movieId || card._id}
+              card={card}
+              isSaved={isSaved(savedMovies, card)}
+            />
+          ))}
+        </ul>
+      )}
+
       {location.pathname === "/movies" && (
-        <button className="movies-card-list__show-more">Ещё</button>
+        <button
+          onClick={handleShowMore}
+          className={
+            movies.length > cardLength
+              ? "movies-card-list__show-more"
+              : "movies-card-list__show-more_disabled"
+          }
+        >
+          Ещё
+        </button>
       )}
     </section>
-  )
+  );
 }
